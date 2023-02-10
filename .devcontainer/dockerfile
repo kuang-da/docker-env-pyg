@@ -1,0 +1,30 @@
+FROM nvcr.io/nvidia/pytorch:22.04-py3
+
+RUN rm -rf /opt/conda/lib/python3.8/site-packages/torch*
+RUN pip install torch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0
+
+RUN pip install torch-geometric -f https://data.pyg.org/whl/torch-1.12.0+cu102.html
+RUN pip install torch-sparse -f https://data.pyg.org/whl/torch-1.12.0+cu102.html
+RUN pip install torch-scatter==2.1.0 -f https://data.pyg.org/whl/torch-1.12.0+cu102.html
+RUN pip install torch-cluster -f https://data.pyg.org/whl/torch-1.12.0+cu102.html
+
+RUN pip install pytorch-lightning==1.5.8
+RUN pip install scikit-learn scipy scikit-misc
+
+RUN pip install matplotlib
+RUN pip install seaborn
+
+# Setting up a non-root user 
+ARG USERNAME=xingran
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    #
+    # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
