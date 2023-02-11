@@ -9,11 +9,11 @@ RUN pip install torch-sparse -f https://data.pyg.org/whl/torch-1.12.0+cu102.html
 RUN pip install torch-scatter==2.1.0 -f https://data.pyg.org/whl/torch-1.12.0+cu102.html
 RUN pip install torch-cluster -f https://data.pyg.org/whl/torch-1.12.0+cu102.html
 
-RUN pip install pytorch-lightning==1.5.8
-RUN pip install scikit-learn scipy scikit-misc
+# RUN pip install pytorch-lightning==1.5.8
+# RUN pip install scikit-learn scipy scikit-misc
 
-RUN pip install matplotlib
-RUN pip install seaborn
+# RUN pip install matplotlib
+# RUN pip install seaborn
 
 # Setting up a non-root user 
 ARG USERNAME=xingran
